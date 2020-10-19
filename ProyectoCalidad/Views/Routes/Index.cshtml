@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ProyectoCalidad.Models.Ruta>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.codigoVuelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.companiaAerea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.diaSemana)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pais)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.arrivalDeparture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.capacidadMaxima)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.codigoVuelo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.companiaAerea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.diaSemana)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pais)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.arrivalDeparture)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.capacidadMaxima)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idRutaPK }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idRutaPK }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idRutaPK })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,66 @@
+﻿@model ProyectoCalidad.Models.Ruta
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ruta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.codigoVuelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigoVuelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.companiaAerea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.companiaAerea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diaSemana)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diaSemana)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pais)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.arrivalDeparture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.arrivalDeparture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.capacidadMaxima)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.capacidadMaxima)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idRutaPK }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

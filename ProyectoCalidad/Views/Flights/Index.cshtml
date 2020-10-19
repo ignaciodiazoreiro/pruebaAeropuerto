@@ -1,0 +1,221 @@
+﻿@model IEnumerable<ProyectoCalidad.Models.Vuelo>
+
+@{
+    ViewBag.Title = "Vuelos";
+    int totalPassengers = 0;
+}
+
+<div class="jumbotron bg-light">
+    <div class="container">
+        <h1 class="display-4"> <i class="fas fa-plane"></i> Vuelos </h1>
+
+    </div>
+
+    <hr class="my-4">
+    @Html.ActionLink("Agregar vuelo", "Create", null, new { @class = "btn btn-dark btn-md mr-4" })
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-dark btn-md" data-toggle="modal" data-target="#exampleModal" id="searchOptions">
+        Opciones de búsqueda
+    </button>
+   
+   <div class="alert alert-info mt-4 fadeIn fast" role="alert" id="noTuples">
+  No existen coincidencias de vuelos con los filtros seleccionados.
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Opciones de búsqueda</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="row">
+                    <div class="form-group col-12">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="airportOption" name="">
+                            <label class="form-check-label" for="airportOption">Buscar por aeropuertos</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="arrDepOption" name="">
+                            <label class="form-check-label" for="arrDepOption">Buscar por Llegada/Salida</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="dateRange" name="">
+                            <label class="form-check-label" for="dateRange">Buscar por rango de fechas</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="dayRadio" value="1">
+                            <label class="form-check-label" for="dayRadio">Un día</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="weekDaysRadio" value="2">
+                            <label class="form-check-label" for="weekDaysRadio">Lunes a Viernes</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="weekendRadio" value="3">
+                            <label class="form-check-label" for="weekendRadio">Fin de semana</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-6" id="airportsDiv">
+                        <label for="airports">Aeropuertos</label>
+                        <select class="form-control" id="airports" name="aiports">
+                            <option value="NA">Elija un aeropuerto</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-6" id="ar-de">
+                        <label for="ar-de">Llegada/Salida</label>
+                        <select class="form-control" id="arrDep" name="arrDep">
+                            <option value="NA">Elija una opción</option>
+                            <option value="A">Llegada</option>
+                            <option value="D">Salida</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group col-6 fadeIn fadeOut fast" id="date1Div">
+                        <label for="date1">Fecha Inicial</label>
+                        <select class="form-control" id="date1" name="date1">
+                            <option value="NA">Elija la fecha 1</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-6 fadeIn fadeOut fast" id="date2Div">
+                        <label for="date2">Fecha Final</label>
+                        <select class="form-control" id="date2" name="date2">
+                            <option value="NA">Elija la fecha 2</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-6 fadeIn fadeOut fast" id="day">
+                        <label for="day">Día</label>
+                        <select class="form-control" id="daySelect" name="day">
+                            <option value="NA">Elija un día</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-6 fadeIn fadeOut fast">
+
+                    </div>
+
+                    <div class="container mt-3 d-flex">
+                        <hr />
+                        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancelar</button>
+                        <button id="queryBtn" type="button" class="btn btn-success" data-dismiss="modal">Consultar</button>
+
+                        @* <button type="submit" class="btn btn-success">Consultar </button> *@
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="newContainer">
+
+</div>
+
+<table class="table text-center table-striped" id="generalTable">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Aeropuerto.nombreAeropuerto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aeropuerto.codigoAeropuertoPK)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.codigoVuelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Ruta.arrivalDeparture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cantidadRealPasajeros)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aeropuerto.nombreAeropuerto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aeropuerto.codigoAeropuertoPK)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.codigoVuelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+
+                </td>
+                 <td>
+                    @Html.DisplayFor(modelItem => item.Ruta.arrivalDeparture)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidadRealPasajeros)
+                    @{
+                        totalPassengers += item.cantidadRealPasajeros;
+                    }
+                </td>
+
+                <td>
+                    @* @Html.ActionLink("Detalles", "Details", new { id = item.idVueloPK }, new { @class = "btn btn-dark" }) *@
+                </td>
+            </tr>
+        }
+        <tr class="">
+            <td>
+                <h4>Total de pasajeros</h4>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                <a class="btn btn-success text-white">@totalPassengers</a>
+            </td>
+            <td>
+            </td>
+        </tr>
+
+    </tbody>
+
+
+</table>
+
+
+
