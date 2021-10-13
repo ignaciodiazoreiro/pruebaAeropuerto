@@ -6,6 +6,7 @@ import modifiers from '../modifiers/index';
  * To override an option, simply pass an object with the same
  * structure of the `options` object, as the 3rd argument. For example:
  * ```
+ *
  * new Popper(ref, pop, {
  *   modifiers: {
  *     preventOverflow: { enabled: false }
